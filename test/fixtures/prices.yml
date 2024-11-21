@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  item: one
+  market: one
+  price: 9.99
+  date_recorded: 2024-11-21
+
+two:
+  item: two
+  market: two
+  price: 9.99
+  date_recorded: 2024-11-21
