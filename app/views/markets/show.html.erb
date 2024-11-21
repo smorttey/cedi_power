@@ -1,0 +1,25 @@
+<div class="container mx-auto py-8">
+  <h1 class="text-3xl font-bold mb-4"><%= @market.name %></h1>
+  <p class="text-gray-700 mb-6"><%= @market.location %></p>
+
+  <table class="table-auto w-full border-collapse border border-gray-300">
+    <thead>
+      <tr class="bg-gray-100">
+        <th class="border border-gray-300 px-4 py-2">Item</th>
+        <th class="border border-gray-300 px-4 py-2">Price (GHS)</th>
+        <th class="border border-gray-300 px-4 py-2">Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @prices.each do |price| %>
+        <tr>
+          <td class="border border-gray-300 px-4 py-2">
+            <%= link_to price.item.name, product_path(price.item.slug), class: "text-blue-500 hover:underline" %>
+          </td>
+          <td class="border border-gray-300 px-4 py-2"><%= number_to_currency(price.price, unit: "GHS") %></td>
+          <td class="border border-gray-300 px-4 py-2"><%= price.date_recorded %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
