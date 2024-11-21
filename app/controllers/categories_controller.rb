@@ -4,7 +4,7 @@ class CategoriesController < ApplicationController
   end
 
   def show
-    @category = Category.find_by!(slug: params[:id])
+    @category = Category.friendly.find(params[:id])
     @items = @category.items
   end
 end
