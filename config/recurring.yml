@@ -8,3 +8,7 @@
 #     command: "SoftDeletedRecord.due.delete_all"
 #     priority: 2
 #     schedule: at 5am every day
+#   refresh_sitemap:
+#     class: RefreshSitemapJob
+#     queue: default
+#     schedule: every day at 2am
