@@ -3,7 +3,7 @@
   <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
     <% @items.each do |item| %>
       <li class="p-4 bg-white rounded shadow hover:shadow-lg">
-        <%= link_to "#{item.name} (#{item.measurement})", product_path(item.slug), class: "text-xl font-semibold text-blue-500 hover:underline" %>
+        <%= link_to "#{item.name} (#{item.measurement})", item_path(item.slug), class: "text-xl font-semibold text-blue-500 hover:underline" %>
         <p class="text-sm text-gray-600"><%= item.description.truncate(50) %></p>
       </li>
     <% end %>

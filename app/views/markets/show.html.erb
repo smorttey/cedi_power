@@ -14,7 +14,7 @@
       <% @prices.each do |price| %>
         <tr>
           <td class="border border-gray-300 px-4 py-2">
-            <%= link_to price.item.name, product_path(price.item.slug), class: "text-blue-500 hover:underline" %>
+            <%= link_to price.item.name, item_path(price.item.slug), class: "text-blue-500 hover:underline" %>
           </td>
           <td class="border border-gray-300 px-4 py-2"><%= number_to_currency(price.price, unit: "GHS") %></td>
           <td class="border border-gray-300 px-4 py-2"><%= price.date_recorded %></td>
