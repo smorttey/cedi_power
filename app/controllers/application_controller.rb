@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include ActionView::Helpers::AssetUrlHelper
+  include MetaTags::ViewHelper
 
   before_action :prepare_meta_tags
 
@@ -12,7 +13,7 @@ class ApplicationController < ActionController::Base
     keywords = options[:keywords] || %w[Ghana markets prices items Makola Kejetia Melcom Cedi]
     image = options[:image] || asset_path("default-image.png")
 
-    display_meta_tags(
+    set_meta_tags(
       site: site_name,
       title: title,
       reverse: true,
