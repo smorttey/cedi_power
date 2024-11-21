@@ -1,6 +1,6 @@
 class CategoriesController < ApplicationController
   def index
-    @categories = Category.all
+    @categories = policy_scope(Category) # Scope for index
     prepare_meta_tags(
       title: "Browse All Categories",
       description: "Explore all categories of items in Ghanaian markets and stores.",
@@ -10,6 +10,7 @@ class CategoriesController < ApplicationController
 
   def show
     @category = Category.friendly.find(params[:id])
+    authorize @category # Authorize action
     @items = @category.items
     prepare_meta_tags(
       title: @category.name,

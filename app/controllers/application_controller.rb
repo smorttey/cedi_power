@@ -1,8 +1,16 @@
 class ApplicationController < ActionController::Base
+  include Pundit
   include ActionView::Helpers::AssetUrlHelper
   include MetaTags::ViewHelper
 
   before_action :prepare_meta_tags
+
+  # Enforce Pundit policies globally
+  after_action :verify_authorized, except: :index
+  after_action :verify_policy_scoped, only: :index
+
+  # Rescue from Pundit errors
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   private
 
@@ -38,7 +46,11 @@ class ApplicationController < ActionController::Base
     )
   end
 
-# Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
-allow_browser versions: :modern
+  # Rescue from unauthorized access
+  def user_not_authorized
+    redirect_to root_path, alert: "You are not authorized to perform this action."
+  end
 
+  # Allow modern browsers only
+  allow_browser versions: :modern
 end
