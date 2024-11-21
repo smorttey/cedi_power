@@ -65,3 +65,5 @@ group :test do
 end
 
 gem 'faker'
+
+gem 'friendly_id', '~> 5.5', '>= 5.5.1'

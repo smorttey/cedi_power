@@ -1,19 +1,19 @@
 Rails.application.routes.draw do
-  get "prices/index"
-  get "markets/index"
-  get "markets/show"
-  get "items/show"
-  get "categories/index"
-  get "categories/show"
+  # Root route
   root "categories#index"
 
-  resources :categories, only: %i[index show]
-  resources :items, only: %i[show]
-  resources :markets, only: %i[index show] do
+  # Resourceful routes for categories
+  resources :categories, only: %i[index show], param: :id
+
+  # Resourceful routes for items with SEO-friendly slugs
+  resources :items, only: %i[show], param: :slug
+
+  # Resourceful routes for markets with nested prices
+  resources :markets, only: %i[index show], param: :slug do
     resources :prices, only: %i[index]
   end
 
+  # User authentication
   resources :users, only: %i[new create]
   resource :session, only: %i[new create destroy]
-
 end
