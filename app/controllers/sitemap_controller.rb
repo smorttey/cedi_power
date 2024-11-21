@@ -2,8 +2,10 @@ class SitemapController < ApplicationController
   skip_before_action :prepare_meta_tags
 
   def index
-    sitemap_path = Rails.public_path.join('sitemap.xml')
-    gzipped_sitemap_path = Rails.public_path.join('sitemap.xml.gz')
+    # Handle both sitemap index and individual sitemaps
+    requested_file = params[:file] || 'sitemap'
+    sitemap_path = Rails.public_path.join("#{requested_file}.xml")
+    gzipped_sitemap_path = Rails.public_path.join("#{requested_file}.xml.gz")
 
     Rails.logger.info "Looking for sitemap at: #{sitemap_path}"
     Rails.logger.info "Looking for gzipped sitemap at: #{gzipped_sitemap_path}"

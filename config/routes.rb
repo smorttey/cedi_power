@@ -19,4 +19,5 @@ Rails.application.routes.draw do
 
   # Add this line after your existing routes
   get '/sitemap.xml' => 'sitemap#index'
+  get '/sitemaps/:file.xml' => 'sitemap#index'
 end
