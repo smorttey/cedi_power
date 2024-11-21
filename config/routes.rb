@@ -16,4 +16,7 @@ Rails.application.routes.draw do
   # User authentication
   resources :users, only: %i[new create]
   resource :session, only: %i[new create destroy]
+
+  # Add this line after your existing routes
+  get '/sitemap.xml' => 'sitemap#index'
 end
