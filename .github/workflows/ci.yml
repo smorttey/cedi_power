@@ -19,8 +19,10 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
-      - name: Make brakeman executable
-        run: chmod +x bin/brakeman
+      - name: Fix line endings
+        run: |
+          sed -i 's/\r$//' bin/brakeman
+          chmod +x bin/brakeman
 
       - name: Scan for common Rails security vulnerabilities using static analysis
         run: bin/brakeman --no-pager
@@ -38,8 +40,10 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
-      - name: Make importmap executable
-        run: chmod +x bin/importmap
+      - name: Fix line endings
+        run: |
+          sed -i 's/\r$//' bin/importmap
+          chmod +x bin/importmap
 
       - name: Scan for security vulnerabilities in JavaScript dependencies
         run: bin/importmap audit
@@ -56,8 +60,10 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
-      - name: Make RuboCop executable
-        run: chmod +x bin/rubocop
+      - name: Fix line endings
+        run: |
+          sed -i 's/\r$//' bin/rubocop
+          chmod +x bin/rubocop
 
       - name: Lint code for consistent style
         run: bin/rubocop -f github
@@ -94,8 +100,10 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
-      - name: Make Rails executable
-        run: chmod +x bin/rails
+      - name: Fix line endings
+        run: |
+          sed -i 's/\r$//' bin/rails
+          chmod +x bin/rails
 
       - name: Run tests
         env:
