@@ -130,22 +130,22 @@ end_date = Date.today
 
 # Define which categories are sold in which market types
 MARKET_CATEGORY_MAPPING = {
-  "Market" => ["Fruits and Vegetables", "Provisions", "Building & Construction"],
-  "Store" => ["Provisions", "Electronics", "Phones & Tablets", "Laptops", "Building & Construction"],
-  "Online" => ["Electronics", "Phones & Tablets", "Laptops", "Vehicles", "Property"]
+  "Market" => [ "Fruits and Vegetables", "Provisions", "Building & Construction" ],
+  "Store" => [ "Provisions", "Electronics", "Phones & Tablets", "Laptops", "Building & Construction" ],
+  "Online" => [ "Electronics", "Phones & Tablets", "Laptops", "Vehicles", "Property" ]
 }
 
 # Create price records with more realistic patterns
 Item.all.each do |item|
   base_price = case item.category.name
-    when "Fruits and Vegetables" then rand(5.0..20.0)
-    when "Provisions" then rand(20.0..100.0)
-    when "Phones & Tablets" then rand(1000.0..8000.0)
-    when "Laptops" then rand(3000.0..12000.0)
-    when "Electronics" then rand(1500.0..5000.0)
-    when "Vehicles" then rand(50000.0..200000.0)
-    when "Building & Construction" then rand(50.0..200.0)
-    else rand(100.0..1000.0)
+  when "Fruits and Vegetables" then rand(5.0..20.0)
+  when "Provisions" then rand(20.0..100.0)
+  when "Phones & Tablets" then rand(1000.0..8000.0)
+  when "Laptops" then rand(3000.0..12000.0)
+  when "Electronics" then rand(1500.0..5000.0)
+  when "Vehicles" then rand(50000.0..200000.0)
+  when "Building & Construction" then rand(50.0..200.0)
+  else rand(100.0..1000.0)
   end
 
   # Select relevant markets for this item
@@ -161,22 +161,22 @@ Item.all.each do |item|
 
     sample_dates.each do |date|
       seasonal_factor = case date.month
-        when 12 then 1.2  # Christmas season
-        when 1 then 1.15  # New Year
-        when 6 then 0.9   # Mid-year sales
-        when 7 then 0.85  # More sales
-        else 1.0
+      when 12 then 1.2  # Christmas season
+      when 1 then 1.15  # New Year
+      when 6 then 0.9   # Mid-year sales
+      when 7 then 0.85  # More sales
+      else 1.0
       end
 
       market_factor = case market.market_type
-        when "Store" then 1.15    # Higher prices in stores
-        when "Online" then 0.95   # Competitive online prices
-        else 1.0
+      when "Store" then 1.15    # Higher prices in stores
+      when "Online" then 0.95   # Competitive online prices
+      else 1.0
       end
 
       # Add some randomness to make prices more realistic
       variation = rand(0.95..1.05)
-      
+
       # Skip some price entries randomly to make data more sparse
       next if rand < 0.2 # 20% chance to skip
 

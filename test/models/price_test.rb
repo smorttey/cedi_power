@@ -4,10 +4,10 @@ class PriceTest < ActiveSupport::TestCase
   test "price history should group by month" do
     item = items(:iphone)
     market = markets(:online)
-    
+
     # Clear existing prices for this test
     item.prices.destroy_all
-    
+
     Price.create!(
       item: item,
       market: market,

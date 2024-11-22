@@ -3,4 +3,4 @@ Chartkick.options = {
   loading: "Loading...",
   empty: "No data available",
   thousands: ","
-} 
+}

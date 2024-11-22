@@ -1,1 +1,1 @@
-Groupdate.time_zone = "Accra" 
+Groupdate.time_zone = "Accra"

@@ -62,14 +62,14 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
-  gem 'database_cleaner-active_record'
+  gem "database_cleaner-active_record"
 end
 
-gem 'faker'
-gem 'friendly_id', '~> 5.5', '>= 5.5.1'
+gem "faker"
+gem "friendly_id", "~> 5.5", ">= 5.5.1"
 gem "meta-tags"
-gem 'sitemap_generator'
-gem 'devise'
-gem 'pundit'
-gem 'chartkick'
-gem 'groupdate'
+gem "sitemap_generator"
+gem "devise"
+gem "pundit"
+gem "chartkick"
+gem "groupdate"

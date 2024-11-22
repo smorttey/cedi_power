@@ -15,13 +15,13 @@ class ApplicationController < ActionController::Base
   private
 
   def skip_pundit_check?
-    devise_controller? || 
-    action_name == 'index'
+    devise_controller? ||
+    action_name == "index"
   end
 
   def need_policy_scope?
-    !devise_controller? && 
-    action_name == 'index'
+    !devise_controller? &&
+    action_name == "index"
   end
 
   def prepare_meta_tags(options = {})
@@ -42,13 +42,13 @@ class ApplicationController < ActionController::Base
         site_name: site_name,
         title: title,
         description: description,
-        type: 'website',
+        type: "website",
         url: request.original_url,
         image: image
       },
       twitter: {
-        card: 'summary_large_image',
-        site: '@cedipower',
+        card: "summary_large_image",
+        site: "@cedipower",
         title: title,
         description: description,
         image: image
@@ -66,7 +66,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :role])
-    devise_parameter_sanitizer.permit(:account_update, keys: [:name])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [ :name, :role ])
+    devise_parameter_sanitizer.permit(:account_update, keys: [ :name ])
   end
 end

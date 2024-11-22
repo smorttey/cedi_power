@@ -1,2 +1,2 @@
- # Extends the application with Pundit functionality
-require 'pundit'
+# Extends the application with Pundit functionality
+require "pundit"

@@ -36,6 +36,6 @@ Rails.application.routes.draw do
   resources :saved_items, only: %i[index create destroy]
 
   # Sitemap for SEO
-  get '/sitemap.xml', to: 'sitemap#index', format: :xml
-  get '/sitemaps/:file.xml', to: 'sitemap#index', format: :xml
+  get "/sitemap.xml", to: "sitemap#index", format: :xml
+  get "/sitemaps/:file.xml", to: "sitemap#index", format: :xml
 end

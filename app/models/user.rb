@@ -14,8 +14,7 @@ class User < ApplicationRecord
 
   # Add name to the list of permitted parameters
   def self.devise_parameter_sanitizer
-    @devise_parameter_sanitizer ||= Devise::ParameterSanitizer.new(User, :user, 
-      [:name, :email, :password, :password_confirmation, :remember_me])
+    @devise_parameter_sanitizer ||= Devise::ParameterSanitizer.new(User, :user,
+      [ :name, :email, :password, :password_confirmation, :remember_me ])
   end
 end
-  

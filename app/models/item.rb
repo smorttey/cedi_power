@@ -12,15 +12,15 @@ class Item < ApplicationRecord
   private
 
   def slug_candidates
-    if ["Phones & Tablets", "Laptops", "Electronics", "Vehicles"].include?(category&.name)
+    if [ "Phones & Tablets", "Laptops", "Electronics", "Vehicles" ].include?(category&.name)
       [
-        [:name, :measurement],
-        [:name, :measurement, :id]
+        [ :name, :measurement ],
+        [ :name, :measurement, :id ]
       ]
     else
       [
         :name,
-        [:name, :id]
+        [ :name, :id ]
       ]
     end
   end

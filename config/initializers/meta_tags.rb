@@ -1,1 +1,1 @@
-require 'meta_tags'
+require "meta_tags"

@@ -14,11 +14,11 @@ class MarketsController < ApplicationController
     @prices = @market.prices
       .includes(item: :category)
       .order(date_recorded: :desc)
-    
+
     prepare_meta_tags(
       title: "Prices at #{@market.name}",
       description: "Current prices for items available at #{@market.name} in #{@market.location}.",
-      keywords: [@market.name, @market.location, "prices", "market"].join(", ")
+      keywords: [ @market.name, @market.location, "prices", "market" ].join(", ")
     )
   end
 end

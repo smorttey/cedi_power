@@ -13,14 +13,14 @@ class ItemTest < ActiveSupport::TestCase
 
   test "should generate different slugs for same item with different conditions" do
     category = categories(:electronics)
-    
+
     item1 = Item.create!(
       name: "LG TV",
       measurement: "Brand New",
       category: category,
       description: "Test"
     )
-    
+
     item2 = Item.create!(
       name: "LG TV",
       measurement: "Used",
@@ -33,7 +33,7 @@ class ItemTest < ActiveSupport::TestCase
 
   test "should generate simple slug for non-electronic items" do
     category = categories(:fruits)
-    
+
     item = Item.create!(
       name: "Fresh Tomatoes",
       measurement: "kg",

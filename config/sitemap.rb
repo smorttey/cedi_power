@@ -15,44 +15,44 @@ SitemapGenerator::Sitemap.compress = false
 
 SitemapGenerator::Sitemap.create do
   # Add static pages to main sitemap
-  add '/', changefreq: 'daily', priority: 1.0
+  add "/", changefreq: "daily", priority: 1.0
 
   # Categories sitemap
-  group(filename: :categories, sitemaps_path: 'sitemaps/') do
+  group(filename: :categories, sitemaps_path: "sitemaps/") do
     Category.find_each do |category|
-      add category_path(category), 
+      add category_path(category),
           lastmod: category.updated_at,
-          changefreq: 'weekly',
+          changefreq: "weekly",
           priority: 0.8
     end
   end
 
   # Items sitemap
-  group(filename: :items, sitemaps_path: 'sitemaps/') do
+  group(filename: :items, sitemaps_path: "sitemaps/") do
     Item.find_each do |item|
-      add item_path(item), 
+      add item_path(item),
           lastmod: item.updated_at,
-          changefreq: 'daily',
+          changefreq: "daily",
           priority: 0.9
     end
   end
 
   # Markets sitemap
-  group(filename: :markets, sitemaps_path: 'sitemaps/') do
+  group(filename: :markets, sitemaps_path: "sitemaps/") do
     Market.find_each do |market|
-      add market_path(market), 
+      add market_path(market),
           lastmod: market.updated_at,
-          changefreq: 'weekly',
+          changefreq: "weekly",
           priority: 0.7
     end
   end
 
   # Prices sitemap
-  group(filename: :prices, sitemaps_path: 'sitemaps/') do
+  group(filename: :prices, sitemaps_path: "sitemaps/") do
     Price.find_each do |price|
-      add market_prices_path(price.market), 
+      add market_prices_path(price.market),
           lastmod: price.updated_at,
-          changefreq: 'daily',
+          changefreq: "daily",
           priority: 0.6
     end
   end
