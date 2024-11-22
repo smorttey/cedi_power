@@ -10,12 +10,15 @@ class MarketsController < ApplicationController
 
   def show
     @market = Market.friendly.find(params[:slug])
-    authorize @market # Authorize action
-    @prices = @market.prices.includes(:item).order(date_recorded: :desc)
+    authorize @market
+    @prices = @market.prices
+      .includes(item: :category)
+      .order(date_recorded: :desc)
+    
     prepare_meta_tags(
-      title: @market.name,
-      description: "Browse items and prices available in #{@market.name}.",
-      keywords: @market.name
+      title: "Prices at #{@market.name}",
+      description: "Current prices for items available at #{@market.name} in #{@market.location}.",
+      keywords: [@market.name, @market.location, "prices", "market"].join(", ")
     )
   end
 end

@@ -61,7 +61,7 @@ class ApplicationController < ActionController::Base
   end
 
   # Allow modern browsers only
-  allow_browser versions: :modern
+  # allow_browser versions: :modern
 
   protected
 

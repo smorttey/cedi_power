@@ -7,9 +7,15 @@ class ItemsController < ApplicationController
   def show
     @item = Item.friendly.find(params[:slug])
     authorize @item
-    @prices = @item.prices.includes(:market).order(date_recorded: :desc)
+    @prices = @item.prices
+      .includes(:market)
+      .where('date_recorded >= ?', 1.year.ago)
+      .order(date_recorded: :desc)
+    
+    @price_history = @prices.price_history
+
     prepare_meta_tags(
-      title: "What is the price of #{@item.name} in Ghana?",
+      title: "Price of #{@item.name} in Ghana",
       description: "Check out the current and historical prices for #{@item.name} in Ghanaian markets.",
       keywords: [@item.name, @item.category.name].join(", ")
     )

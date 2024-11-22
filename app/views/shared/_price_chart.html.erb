@@ -1,0 +1,79 @@
+<div class="card p-6 mb-6">
+  <h2 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
+    Price History of <%= @item.name %> 
+    (<%= @price_history.keys.first&.strftime("%B %Y") %> to <%= @price_history.keys.last&.strftime("%B %Y") %>)
+  </h2>
+  <%= line_chart @price_history,
+    height: "400px",
+    min: 0,
+    max: (@prices.maximum(:price) * 1.1).round(2),
+    prefix: "GHS ",
+    points: true,
+    point_size: 4,
+    curve: true,
+    colors: ["#3b82f6"],
+    loading: "Loading price history...",
+    empty: "No price history available",
+    messages: { empty: "No price data available for this period" },
+    library: {
+      plugins: {
+        legend: { display: false },
+        title: {
+          display: true,
+          text: 'Average Monthly Price',
+          color: '#9ca3af',
+          font: { size: 14 }
+        },
+        tooltip: {
+          backgroundColor: 'rgba(17, 24, 39, 0.8)',
+          titleColor: '#fff',
+          bodyColor: '#fff',
+          borderColor: '#374151',
+          borderWidth: 1,
+          padding: 12,
+          callbacks: {
+            label: "(context) => `Average Price: GHS ${context.parsed.y.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`",
+            title: "(context) => new Date(context[0].label).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })"
+          }
+        }
+      },
+      scales: {
+        x: {
+          type: 'time',
+          time: {
+            unit: 'month',
+            displayFormats: {
+              month: 'MMM yyyy'
+            }
+          },
+          grid: { display: false },
+          ticks: { 
+            color: '#9ca3af',
+            font: { size: 12 }
+          },
+          title: {
+            display: true,
+            text: 'Month',
+            color: '#9ca3af',
+            font: { size: 12 }
+          }
+        },
+        y: {
+          grid: { color: '#374151' },
+          ticks: { 
+            callback: "(value) => `GHS ${value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,",
+            color: '#9ca3af',
+            font: { size: 12 },
+            stepSize: ((@prices.maximum(:price) - @prices.minimum(:price)) / 5.0).ceil
+          },
+          title: {
+            display: true,
+            text: 'Price (GHS)',
+            color: '#9ca3af',
+            font: { size: 12 }
+          },
+          beginAtZero: true
+        }
+      }
+    } %>
+</div> 

@@ -1,57 +1,119 @@
-<div class="animate-fade-in">
-  <header class="mb-8">
-    <div class="flex items-center space-x-2 text-gray-500 dark:text-gray-400 mb-4">
+<div class="animate-fade-in p-4 sm:p-0">
+  <nav class="mb-4 overflow-x-auto whitespace-nowrap">
+    <div class="flex items-center space-x-2 text-gray-500 dark:text-gray-400 text-sm">
       <%= link_to "Markets", markets_path, class: "hover:text-blue-600 dark:hover:text-blue-400" %>
       <span>/</span>
-      <span class="text-gray-900 dark:text-white"><%= @market.name %></span>
+      <span class="text-gray-900 dark:text-white truncate"><%= @market.name %></span>
     </div>
-    
-    <div class="flex justify-between items-start">
-      <div>
-        <h1 class="text-3xl font-bold text-gray-900 dark:text-white"><%= @market.name %></h1>
-        <p class="mt-2 text-gray-600 dark:text-gray-400 flex items-center">
-          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-          </svg>
-          <%= @market.location %>
+  </nav>
+
+  <header class="mb-6">
+    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
+      <div class="flex-1">
+        <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white break-words">
+          <%= @market.name %>
+        </h1>
+        <p class="mt-2 text-gray-600 dark:text-gray-400">
+          <span class="inline-flex items-center">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+            <%= @market.location %>
+          </span>
         </p>
+      </div>
+      <div class="w-full sm:w-auto bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+        <div class="grid grid-cols-2 gap-4 text-center">
+          <div>
+            <div class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
+              <%= @prices.select(:item_id).distinct.count %>
+            </div>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Items Tracked</p>
+          </div>
+          <div>
+            <div class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
+              <%= time_ago_in_words(@prices.maximum(:date_recorded)) %>
+            </div>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Last Updated</p>
+          </div>
+        </div>
       </div>
     </div>
   </header>
 
-  <div class="card p-6">
-    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-      <thead>
-        <tr>
-          <th scope="col" class="table-header">Item</th>
-          <th scope="col" class="table-header">Price (GHS)</th>
-          <th scope="col" class="table-header">Last Updated</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @prices.each do |price| %>
-          <tr class="hover:bg-gray-50 dark:hover:bg-dark-darker">
-            <td class="table-cell">
-              <%= link_to item_path(price.item.slug), 
-                  class: "text-blue-600 dark:text-blue-400 hover:underline" do %>
-                <span class="font-medium"><%= price.item.name %></span>
-                <span class="text-gray-500 dark:text-gray-400">
-                  (<%= price.item.measurement %>)
-                </span>
-              <% end %>
-            </td>
-            <td class="table-cell font-medium">
-              <%= number_to_currency(price.price, unit: "GHS") %>
-            </td>
-            <td class="table-cell text-gray-500 dark:text-gray-400">
-              <%= price.date_recorded.strftime("%b %d, %Y") %>
-            </td>
+  <div class="card overflow-hidden">
+    <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+      <h2 class="text-lg font-medium text-gray-900 dark:text-white">Available Items</h2>
+      <div class="relative">
+        <input type="text" 
+               id="market-search" 
+               placeholder="Search items..." 
+               class="w-full sm:w-64 px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400">
+      </div>
+    </div>
+    
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead>
+          <tr>
+            <th scope="col" class="table-header">Item</th>
+            <th scope="col" class="table-header">Category</th>
+            <th scope="col" class="table-header">Price</th>
+            <th scope="col" class="table-header hidden sm:table-cell">Updated</th>
+            <th scope="col" class="table-header">Market Comparison</th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+          <% @prices.each do |price| %>
+            <tr class="hover:bg-gray-50 dark:hover:bg-dark-darker">
+              <td class="table-cell">
+                <%= link_to item_path(price.item.slug), 
+                    class: "text-blue-600 dark:text-blue-400 hover:underline" do %>
+                  <span class="font-medium"><%= price.item.name %></span>
+                  <span class="text-gray-500 dark:text-gray-400">
+                    (<%= price.item.measurement %>)
+                  </span>
+                <% end %>
+              </td>
+              <td class="table-cell text-gray-500 dark:text-gray-400">
+                <%= price.item.category.name %>
+              </td>
+              <td class="table-cell font-medium whitespace-nowrap">
+                <%= number_to_currency(price.price, unit: "GHS") %>
+              </td>
+              <td class="table-cell hidden sm:table-cell text-gray-500 dark:text-gray-400">
+                <%= time_ago_in_words(price.date_recorded) %> ago
+              </td>
+              <td class="table-cell">
+                <% market_avg = price.item.prices.where.not(market: @market).average(:price) %>
+                <% if market_avg %>
+                  <% difference = ((price.price - market_avg) / market_avg * 100).round(1) %>
+                  <span class="<%= difference.positive? ? 'text-red-600' : 'text-green-600' %>">
+                    <%= difference.positive? ? '+' : '' %><%= difference %>%
+                  </span>
+                <% else %>
+                  <span class="text-gray-400">No data</span>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
+
+<%= content_for :page_scripts do %>
+  <script>
+    document.getElementById('market-search').addEventListener('input', function(e) {
+      const searchText = e.target.value.toLowerCase();
+      const rows = document.querySelectorAll('tbody tr');
+      
+      rows.forEach(row => {
+        const itemName = row.querySelector('td:first-child').textContent.toLowerCase();
+        row.style.display = itemName.includes(searchText) ? '' : 'none';
+      });
+    });
+  </script>
+<% end %>

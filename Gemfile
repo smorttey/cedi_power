@@ -65,13 +65,10 @@ group :test do
 end
 
 gem 'faker'
-
 gem 'friendly_id', '~> 5.5', '>= 5.5.1'
-
 gem "meta-tags"
-
 gem 'sitemap_generator'
-
 gem 'devise'
-
 gem 'pundit'
+gem 'chartkick'
+gem 'groupdate'
