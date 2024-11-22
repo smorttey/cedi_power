@@ -13,11 +13,26 @@ Rails.application.routes.draw do
     resources :prices, only: %i[index]
   end
 
-  # User authentication
-  resources :users, only: %i[new create]
-  resource :session, only: %i[new create destroy]
+  # User authentication (using Devise for session handling)
+  devise_for :users
 
-  # Add this line after your existing routes
-  get '/sitemap.xml' => 'sitemap#index'
-  get '/sitemaps/:file.xml' => 'sitemap#index'
+  # Admin-specific routes
+  namespace :admin do
+    get "dashboard", to: "dashboard#index", as: :dashboard
+    resources :users, only: %i[index show destroy]
+  end
+
+  # Store owner-specific routes
+  namespace :store_owner do
+    get "dashboard", to: "dashboard#index", as: :dashboard
+    resources :prices, only: %i[index edit update]
+    resources :markets, only: %i[new create edit update]
+  end
+
+  # Saved Items for general users
+  resources :saved_items, only: %i[index create destroy]
+
+  # Sitemap for SEO
+  get '/sitemap.xml', to: 'sitemap#index', format: :xml
+  get '/sitemaps/:file.xml', to: 'sitemap#index', format: :xml
 end

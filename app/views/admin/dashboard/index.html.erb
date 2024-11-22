@@ -1,0 +1,17 @@
+<div class="container mx-auto py-8">
+  <h1 class="text-3xl font-bold mb-6">Admin Dashboard</h1>
+
+  <h2 class="text-xl mb-4">Users</h2>
+  <ul>
+    <% @users.each do |user| %>
+      <li><%= user.email %> - <%= user.role %></li>
+    <% end %>
+  </ul>
+
+  <h2 class="text-xl mt-8 mb-4">Categories</h2>
+  <ul>
+    <% @categories.each do |category| %>
+      <li><%= link_to category.name, category_path(category) %></li>
+    <% end %>
+  </ul>
+</div>

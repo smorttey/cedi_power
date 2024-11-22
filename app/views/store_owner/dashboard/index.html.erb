@@ -1,0 +1,19 @@
+<div class="container mx-auto py-8">
+  <h1 class="text-3xl font-bold mb-6">Store Owner Dashboard</h1>
+
+  <h2 class="text-xl mb-4">Your Markets</h2>
+  <ul>
+    <% @markets.each do |market| %>
+      <li><%= link_to market.name, market_path(market) %></li>
+    <% end %>
+  </ul>
+
+  <h2 class="text-xl mt-8 mb-4">Prices You Manage</h2>
+  <ul>
+    <% @prices.each do |price| %>
+      <li>
+        <%= price.item.name %> - GHS <%= price.price %> at <%= link_to price.market.name, market_path(price.market) %>
+      </li>
+    <% end %>
+  </ul>
+</div>
