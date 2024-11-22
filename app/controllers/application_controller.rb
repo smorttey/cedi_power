@@ -4,15 +4,25 @@ class ApplicationController < ActionController::Base
   include MetaTags::ViewHelper
 
   before_action :prepare_meta_tags
+  before_action :configure_permitted_parameters, if: :devise_controller?
 
-  # Enforce Pundit policies globally
-  after_action :verify_authorized, except: :index
-  after_action :verify_policy_scoped, only: :index
+  # Modified Pundit callbacks to handle Devise controllers
+  after_action :verify_authorized, unless: :skip_pundit_check?
+  after_action :verify_policy_scoped, if: :need_policy_scope?
 
-  # Rescue from Pundit errors
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   private
+
+  def skip_pundit_check?
+    devise_controller? || 
+    action_name == 'index'
+  end
+
+  def need_policy_scope?
+    !devise_controller? && 
+    action_name == 'index'
+  end
 
   def prepare_meta_tags(options = {})
     site_name = "Cedi Power"
@@ -46,11 +56,17 @@ class ApplicationController < ActionController::Base
     )
   end
 
-  # Rescue from unauthorized access
   def user_not_authorized
     redirect_to root_path, alert: "You are not authorized to perform this action."
   end
 
   # Allow modern browsers only
   allow_browser versions: :modern
+
+  protected
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :role])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:name])
+  end
 end

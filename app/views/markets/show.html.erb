@@ -22,38 +22,36 @@
     </div>
   </header>
 
-  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden">
-    <div class="price-table">
-      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-        <thead>
-          <tr>
-            <th scope="col" class="price-table-header px-6 py-3">Item</th>
-            <th scope="col" class="price-table-header px-6 py-3">Price (GHS)</th>
-            <th scope="col" class="price-table-header px-6 py-3">Last Updated</th>
+  <div class="card p-6">
+    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+      <thead>
+        <tr>
+          <th scope="col" class="table-header">Item</th>
+          <th scope="col" class="table-header">Price (GHS)</th>
+          <th scope="col" class="table-header">Last Updated</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @prices.each do |price| %>
+          <tr class="hover:bg-gray-50 dark:hover:bg-dark-darker">
+            <td class="table-cell">
+              <%= link_to item_path(price.item.slug), 
+                  class: "text-blue-600 dark:text-blue-400 hover:underline" do %>
+                <span class="font-medium"><%= price.item.name %></span>
+                <span class="text-gray-500 dark:text-gray-400">
+                  (<%= price.item.measurement %>)
+                </span>
+              <% end %>
+            </td>
+            <td class="table-cell font-medium">
+              <%= number_to_currency(price.price, unit: "GHS") %>
+            </td>
+            <td class="table-cell text-gray-500 dark:text-gray-400">
+              <%= price.date_recorded.strftime("%b %d, %Y") %>
+            </td>
           </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-          <% @prices.each do |price| %>
-            <tr class="hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors duration-150">
-              <td class="price-table-cell">
-                <%= link_to item_path(price.item.slug), 
-                    class: "text-blue-600 dark:text-blue-400 hover:underline" do %>
-                  <span class="font-medium"><%= price.item.name %></span>
-                  <span class="text-gray-500 dark:text-gray-400">
-                    (<%= price.item.measurement %>)
-                  </span>
-                <% end %>
-              </td>
-              <td class="price-table-cell font-medium">
-                <%= number_to_currency(price.price, unit: "GHS") %>
-              </td>
-              <td class="price-table-cell text-gray-500 dark:text-gray-400">
-                <%= price.date_recorded.strftime("%b %d, %Y") %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 </div>

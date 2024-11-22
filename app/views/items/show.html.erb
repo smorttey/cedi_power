@@ -1,25 +1,38 @@
-<div class="container mx-auto py-8">
-  <h1 class="text-3xl font-bold mb-4"><%= @item.name %> (<%= @item.measurement %>)</h1>
-  <p class="text-gray-700 mb-6"><%= @item.description %></p>
+<div class="animate-fade-in">
+  <header class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
+      <%= @item.name %> (<%= @item.measurement %>)
+    </h1>
+    <p class="mt-2 text-gray-600 dark:text-gray-400"><%= @item.description %></p>
+  </header>
 
-  <table class="table-auto w-full border-collapse border border-gray-300">
-    <thead>
-      <tr class="bg-gray-100">
-        <th class="border border-gray-300 px-4 py-2">Market</th>
-        <th class="border border-gray-300 px-4 py-2">Price (GHS)</th>
-        <th class="border border-gray-300 px-4 py-2">Date</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @prices.each do |price| %>
+  <div class="card overflow-hidden">
+    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+      <thead>
         <tr>
-          <td class="border border-gray-300 px-4 py-2">
-            <%= link_to price.market.name, market_path(price.market.slug), class: "text-blue-500 hover:underline" %>
-          </td>
-          <td class="border border-gray-300 px-4 py-2"><%= number_to_currency(price.price, unit: "GHS") %></td>
-          <td class="border border-gray-300 px-4 py-2"><%= price.date_recorded %></td>
+          <th scope="col" class="table-header">Market</th>
+          <th scope="col" class="table-header">Price (GHS)</th>
+          <th scope="col" class="table-header">Last Updated</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+        <% @prices.each do |price| %>
+          <tr class="hover:bg-gray-50 dark:hover:bg-dark-darker">
+            <td class="table-cell">
+              <%= link_to market_path(price.market.slug), 
+                  class: "text-blue-600 dark:text-blue-400 hover:underline" do %>
+                <span class="font-medium"><%= price.market.name %></span>
+              <% end %>
+            </td>
+            <td class="table-cell font-medium">
+              <%= number_to_currency(price.price, unit: "GHS") %>
+            </td>
+            <td class="table-cell text-gray-500 dark:text-gray-400">
+              <%= price.date_recorded.strftime("%b %d, %Y") %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>

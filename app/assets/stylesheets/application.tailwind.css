@@ -8,16 +8,49 @@
   }
   
   body {
-    @apply bg-gray-50 dark:bg-gray-900;
+    @apply bg-gray-100 dark:bg-dark text-gray-900 dark:text-gray-100;
+  }
+
+  * {
+    @apply transition-all duration-200;
   }
 }
 
 @layer components {
-  /* Public Pages - Shopify Inspired */
+  .table-header {
+    @apply bg-white dark:bg-dark-lighter 
+           text-left text-sm font-medium text-gray-600 dark:text-gray-300
+           px-6 py-3 border-b border-gray-200 dark:border-gray-700
+           bg-gradient-mac dark:bg-gradient-mac-dark;
+  }
+
+  .table-cell {
+    @apply px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-200
+           border-b border-gray-200 dark:border-gray-700;
+  }
+
+  .card {
+    @apply bg-white dark:bg-dark-lighter rounded-lg 
+           shadow-mac dark:shadow-mac-dark
+           border border-gray-200/50 dark:border-gray-700/50
+           bg-gradient-mac dark:bg-gradient-mac-dark
+           backdrop-blur-sm;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center rounded-md px-4 py-2
+           text-sm font-medium shadow-mac dark:shadow-mac-dark
+           transition-all duration-200 bg-gradient-mac dark:bg-gradient-mac-dark;
+  }
+
+  .btn-primary {
+    @apply btn bg-blue-600 text-white hover:bg-blue-700
+           focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+  }
+
   .market-card {
-    @apply bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 
-           hover:border-gray-300 dark:hover:border-gray-600 transition-all duration-200
-           shadow-sm hover:shadow-md p-6;
+    @apply card p-6 hover:shadow-mac-hover transform hover:-translate-y-0.5
+           transition-all duration-200 animate-slide-up;
   }
 
   .market-title {
@@ -26,63 +59,94 @@
   }
 
   .market-location {
-    @apply text-sm text-gray-500 dark:text-gray-400;
+    @apply text-sm text-gray-500 dark:text-gray-400 flex items-center;
   }
 
-  .price-table {
-    @apply min-w-full divide-y divide-gray-200 dark:divide-gray-700
-           bg-white dark:bg-gray-800 shadow-sm rounded-lg overflow-hidden;
-  }
-
-  .price-table-header {
-    @apply bg-gray-50 dark:bg-gray-900 text-left text-xs font-medium 
-           text-gray-500 dark:text-gray-400 uppercase tracking-wider;
-  }
-
-  .price-table-cell {
-    @apply px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100;
-  }
-
-  /* Dashboard - Linear Inspired */
   .dashboard-container {
-    @apply bg-white dark:bg-gray-900 min-h-screen;
+    @apply min-h-screen bg-gray-50 dark:bg-dark;
   }
 
   .dashboard-sidebar {
-    @apply fixed top-0 left-0 h-full w-64 bg-gray-50 dark:bg-gray-800
-           border-r border-gray-200 dark:border-gray-700;
+    @apply fixed top-0 left-0 h-full w-64 
+           bg-white/80 dark:bg-dark-lighter/80 backdrop-blur-xl
+           border-r border-gray-200/50 dark:border-gray-700/50
+           shadow-mac dark:shadow-mac-dark;
   }
 
   .dashboard-main {
     @apply ml-64 p-8;
   }
 
-  .dashboard-card {
-    @apply bg-white dark:bg-gray-800 rounded-lg border border-gray-200 
-           dark:border-gray-700 p-6 hover:border-gray-300 dark:hover:border-gray-600;
+  .dashboard-nav-item {
+    @apply flex items-center px-3 py-2 text-sm font-medium rounded-md
+           transition-all duration-200
+           hover:bg-gray-100 dark:hover:bg-dark-darker
+           text-gray-600 dark:text-gray-300
+           hover:text-gray-900 dark:hover:text-white;
   }
 
-  .dashboard-stat {
-    @apply text-3xl font-semibold text-gray-900 dark:text-white;
+  .dashboard-nav-item-active {
+    @apply bg-blue-50 dark:bg-blue-900/20 
+           text-blue-600 dark:text-blue-400;
   }
 
-  /* Common Components */
-  .btn {
-    @apply inline-flex items-center justify-center rounded-md px-4 py-2
-           text-sm font-medium transition-colors duration-200
-           focus:outline-none focus:ring-2 focus:ring-offset-2;
+  .dashboard-stat-card {
+    @apply card p-6 hover:shadow-mac-hover
+           transform hover:-translate-y-0.5;
   }
 
-  .btn-primary {
-    @apply btn bg-blue-600 text-white hover:bg-blue-700
-           focus:ring-blue-500;
+  .dashboard-list-item {
+    @apply flex items-center justify-between p-4 rounded-lg
+           bg-gray-50/50 dark:bg-dark-darker/50
+           hover:bg-gray-100/50 dark:hover:bg-dark-darker
+           border border-gray-200/50 dark:border-gray-700/50
+           transition-all duration-200;
   }
 
-  .btn-secondary {
-    @apply btn bg-white text-gray-700 border border-gray-300
-           hover:bg-gray-50 focus:ring-gray-500;
+  .auth-container {
+    @apply min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8
+           bg-gray-50 dark:bg-dark;
   }
-  .test-style {
-    @apply bg-red-500 text-white p-4 rounded-lg mb-4;
+
+  .auth-card {
+    @apply card mx-auto w-full max-w-md p-8
+           sm:rounded-xl sm:px-10;
+  }
+
+  .auth-title {
+    @apply mt-6 text-center text-3xl font-bold tracking-tight 
+           text-gray-900 dark:text-white;
+  }
+
+  .form-group {
+    @apply space-y-1 mb-6;
+  }
+
+  .form-label {
+    @apply block text-sm font-medium text-gray-700 dark:text-gray-300;
+  }
+
+  .form-input {
+    @apply block w-full rounded-md border-0 py-2 px-3
+           text-gray-900 dark:text-white
+           bg-white/50 dark:bg-dark-lighter/50
+           shadow-mac dark:shadow-mac-dark
+           backdrop-blur-sm
+           placeholder:text-gray-400 dark:placeholder:text-gray-500
+           focus:ring-2 focus:ring-blue-500
+           sm:text-sm sm:leading-6;
+  }
+
+  .form-error {
+    @apply mt-1 text-sm text-red-600 dark:text-red-400;
+  }
+
+  .auth-footer {
+    @apply mt-6 text-center text-sm text-gray-500 dark:text-gray-400;
+  }
+
+  .auth-link {
+    @apply font-medium text-blue-600 hover:text-blue-500 
+           dark:text-blue-400 dark:hover:text-blue-300;
   }
 }
