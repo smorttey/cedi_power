@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html data-controller="dark-mode">
   <head>
     <%= display_meta_tags %>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -19,7 +19,8 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="bg-gray-100 text-gray-800">
+  <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100" 
+        data-controller="dark-mode">
     <!-- Navigation -->
     <nav class="bg-blue-600 text-white p-4">
       <div class="container mx-auto flex justify-between items-center">
@@ -27,7 +28,8 @@
           <%= link_to "Cedi Power", root_path, class: "text-lg font-bold hover:underline" %>
         </div>
 
-        <div class="flex space-x-4">
+        <div class="flex items-center space-x-4">
+          <%= render "shared/dark_mode_toggle" %>
           <% if user_signed_in? %>
             <% if current_user.admin? %>
               <%= link_to "Admin Dashboard", admin_dashboard_path, class: "hover:underline" %>

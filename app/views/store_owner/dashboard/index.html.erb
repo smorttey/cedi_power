@@ -1,19 +1,99 @@
-<div class="container mx-auto py-8">
-  <h1 class="text-3xl font-bold mb-6">Store Owner Dashboard</h1>
+<div class="dashboard-container">
+  <div class="dashboard-sidebar p-6">
+    <div class="flex items-center space-x-3 mb-8">
+      <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center">
+        <span class="text-white font-semibold">
+          <%= current_user.email.first.upcase %>
+        </span>
+      </div>
+      <div class="flex-1 min-w-0">
+        <h2 class="text-sm font-medium text-gray-900 dark:text-white truncate">
+          <%= current_user.email %>
+        </h2>
+        <p class="text-xs text-gray-500 dark:text-gray-400">Store Owner</p>
+      </div>
+    </div>
 
-  <h2 class="text-xl mb-4">Your Markets</h2>
-  <ul>
-    <% @markets.each do |market| %>
-      <li><%= link_to market.name, market_path(market) %></li>
-    <% end %>
-  </ul>
+    <nav class="space-y-1">
+      <%= link_to store_owner_dashboard_path, 
+          class: "flex items-center px-3 py-2 text-sm font-medium rounded-md bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white" do %>
+        <svg class="mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+        </svg>
+        Dashboard
+      <% end %>
+    </nav>
+  </div>
 
-  <h2 class="text-xl mt-8 mb-4">Prices You Manage</h2>
-  <ul>
-    <% @prices.each do |price| %>
-      <li>
-        <%= price.item.name %> - GHS <%= price.price %> at <%= link_to price.market.name, market_path(price.market) %>
-      </li>
-    <% end %>
-  </ul>
+  <main class="dashboard-main">
+    <div class="max-w-7xl mx-auto">
+      <header class="mb-8">
+        <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Dashboard Overview</h1>
+      </header>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div class="dashboard-card">
+          <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-4">Your Markets</h3>
+          <p class="dashboard-stat"><%= @markets.count %></p>
+        </div>
+        <div class="dashboard-card">
+          <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-4">Active Prices</h3>
+          <p class="dashboard-stat"><%= @prices.count %></p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <section class="dashboard-card">
+          <header class="flex items-center justify-between mb-6">
+            <h2 class="text-lg font-medium text-gray-900 dark:text-white">Your Markets</h2>
+            <%= link_to "Add Market", new_store_owner_market_path, 
+                class: "btn-primary text-xs" if policy(Market).create? %>
+          </header>
+          
+          <div class="space-y-4">
+            <% @markets.each do |market| %>
+              <div class="flex items-center justify-between p-4 rounded-lg bg-gray-50 dark:bg-gray-750">
+                <div>
+                  <h3 class="font-medium text-gray-900 dark:text-white">
+                    <%= market.name %>
+                  </h3>
+                  <p class="text-sm text-gray-500 dark:text-gray-400">
+                    <%= market.location %>
+                  </p>
+                </div>
+                <%= link_to "View", market_path(market), 
+                    class: "btn-secondary text-xs" %>
+              </div>
+            <% end %>
+          </div>
+        </section>
+
+        <section class="dashboard-card">
+          <header class="flex items-center justify-between mb-6">
+            <h2 class="text-lg font-medium text-gray-900 dark:text-white">Prices You Manage</h2>
+            <%= link_to "Add Price", new_store_owner_price_path, 
+                class: "btn-primary text-xs" if policy(Price).create? %>
+          </header>
+          
+          <div class="space-y-4">
+            <% @prices.each do |price| %>
+              <div class="flex items-center justify-between p-4 rounded-lg bg-gray-50 dark:bg-gray-750">
+                <div>
+                  <h3 class="font-medium text-gray-900 dark:text-white">
+                    <%= price.item.name %>
+                  </h3>
+                  <p class="text-sm text-gray-500 dark:text-gray-400">
+                    GHS <%= price.price %> at <%= link_to price.market.name, market_path(price.market) %>
+                  </p>
+                </div>
+                <%= link_to "View", price_path(price), 
+                    class: "btn-secondary text-xs" %>
+              </div>
+            <% end %>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
 </div>

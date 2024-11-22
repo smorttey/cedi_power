@@ -1,25 +1,59 @@
-<div class="container mx-auto py-8">
-  <h1 class="text-3xl font-bold mb-4"><%= @market.name %></h1>
-  <p class="text-gray-700 mb-6"><%= @market.location %></p>
+<div class="animate-fade-in">
+  <header class="mb-8">
+    <div class="flex items-center space-x-2 text-gray-500 dark:text-gray-400 mb-4">
+      <%= link_to "Markets", markets_path, class: "hover:text-blue-600 dark:hover:text-blue-400" %>
+      <span>/</span>
+      <span class="text-gray-900 dark:text-white"><%= @market.name %></span>
+    </div>
+    
+    <div class="flex justify-between items-start">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white"><%= @market.name %></h1>
+        <p class="mt-2 text-gray-600 dark:text-gray-400 flex items-center">
+          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          <%= @market.location %>
+        </p>
+      </div>
+    </div>
+  </header>
 
-  <table class="table-auto w-full border-collapse border border-gray-300">
-    <thead>
-      <tr class="bg-gray-100">
-        <th class="border border-gray-300 px-4 py-2">Item</th>
-        <th class="border border-gray-300 px-4 py-2">Price (GHS)</th>
-        <th class="border border-gray-300 px-4 py-2">Date</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @prices.each do |price| %>
-        <tr>
-          <td class="border border-gray-300 px-4 py-2">
-            <%= link_to price.item.name, item_path(price.item.slug), class: "text-blue-500 hover:underline" %>
-          </td>
-          <td class="border border-gray-300 px-4 py-2"><%= number_to_currency(price.price, unit: "GHS") %></td>
-          <td class="border border-gray-300 px-4 py-2"><%= price.date_recorded %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden">
+    <div class="price-table">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead>
+          <tr>
+            <th scope="col" class="price-table-header px-6 py-3">Item</th>
+            <th scope="col" class="price-table-header px-6 py-3">Price (GHS)</th>
+            <th scope="col" class="price-table-header px-6 py-3">Last Updated</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+          <% @prices.each do |price| %>
+            <tr class="hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors duration-150">
+              <td class="price-table-cell">
+                <%= link_to item_path(price.item.slug), 
+                    class: "text-blue-600 dark:text-blue-400 hover:underline" do %>
+                  <span class="font-medium"><%= price.item.name %></span>
+                  <span class="text-gray-500 dark:text-gray-400">
+                    (<%= price.item.measurement %>)
+                  </span>
+                <% end %>
+              </td>
+              <td class="price-table-cell font-medium">
+                <%= number_to_currency(price.price, unit: "GHS") %>
+              </td>
+              <td class="price-table-cell text-gray-500 dark:text-gray-400">
+                <%= price.date_recorded.strftime("%b %d, %Y") %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
