@@ -1,9 +1,20 @@
 class SitemapController < ApplicationController
   skip_before_action :prepare_meta_tags
 
+  ALLOWED_SITEMAPS = [
+    "sitemap",
+    "sitemaps/categories",
+    "sitemaps/items",
+    "sitemaps/markets",
+    "sitemaps/prices"
+  ].freeze
+
   def index
-    # Handle both sitemap index and individual sitemaps
     requested_file = params[:file] || "sitemap"
+    unless ALLOWED_SITEMAPS.include?(requested_file)
+      return render xml: { error: "Invalid sitemap" }, status: :bad_request
+    end
+
     sitemap_path = Rails.public_path.join("#{requested_file}.xml")
     gzipped_sitemap_path = Rails.public_path.join("#{requested_file}.xml.gz")
 
