@@ -38,7 +38,7 @@
               <%= link_to "Manage Users", users_path, class: "hover:underline" %>
             <% elsif current_user.store_owner? %>
               <%= link_to "Store Dashboard", store_owner_dashboard_path, class: "hover:underline" %>
-              <%= link_to "My Prices", prices_path, class: "hover:underline" %>
+              <%= link_to "Prices", store_owner_prices_path if current_user&.store_owner? %>
             <% else %>
               <%= link_to "My Saved Items", saved_items_path, class: "hover:underline" %>
               <%= link_to "Profile", edit_user_registration_path, class: "hover:underline" %>

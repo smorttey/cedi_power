@@ -1,9 +1,9 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  user: one
+  user: admin
   search_term: MyString
 
 two:
-  user: two
+  user: store_owner
   search_term: MyString

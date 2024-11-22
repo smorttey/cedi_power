@@ -1,11 +1,19 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  email: MyString
-  password_digest: MyString
-  role: 1
+admin:
+  email: admin@example.com
+  encrypted_password: <%= User.new.send(:password_digest, 'password123') %>
+  role: admin
+  name: Test Admin
 
-two:
-  email: MyString
-  password_digest: MyString
-  role: 1
+store_owner:
+  email: store@example.com
+  encrypted_password: <%= User.new.send(:password_digest, 'password123') %>
+  role: store_owner
+  name: Test Store Owner
+
+user:
+  email: user@example.com
+  encrypted_password: <%= User.new.send(:password_digest, 'password123') %>
+  role: general_user
+  name: Test User

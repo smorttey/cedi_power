@@ -1,13 +1,15 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  slug: MyString
-  location: MyString
-  type: 
+online:
+  name: Test Online Store
+  location: Online
+  market_type: Online
+  slug: test-online-store
+  owner: store_owner
 
-two:
-  name: MyString
-  slug: MyString
-  location: MyString
-  type: 
+market:
+  name: Test Market
+  location: Test Location
+  market_type: Market
+  slug: test-market
+  owner: store_owner

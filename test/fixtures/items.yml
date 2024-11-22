@@ -1,17 +1,15 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  slug: MyString
-  description: MyText
-  measurement: MyString
-  image_url: MyString
-  category: one
+iphone:
+  name: iPhone 14 Pro
+  measurement: Brand New
+  category: electronics
+  description: Test phone
+  slug: iphone-14-pro
 
-two:
-  name: MyString
-  slug: MyString
-  description: MyText
-  measurement: MyString
-  image_url: MyString
-  category: two
+tomatoes:
+  name: Fresh Tomatoes
+  measurement: kg
+  category: fruits
+  description: Test vegetable
+  slug: fresh-tomatoes

@@ -3,8 +3,8 @@ class StoreOwner::DashboardController < ApplicationController
   before_action :authorize_store_owner
 
   def index
-    @markets = Market.where(owner_id: current_user.id)
-    @prices = Price.where(market: @markets)
+    @markets = policy_scope(Market).where(owner_id: current_user.id)
+    @prices = policy_scope(Price).where(market: @markets)
   end
 
   private

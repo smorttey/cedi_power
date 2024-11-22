@@ -72,8 +72,7 @@
         <section class="dashboard-card">
           <header class="flex items-center justify-between mb-6">
             <h2 class="text-lg font-medium text-gray-900 dark:text-white">Prices You Manage</h2>
-            <%= link_to "Add Price", new_store_owner_price_path, 
-                class: "btn-primary text-xs" if policy(Price).create? %>
+            <%= link_to "Add Price", new_store_owner_price_path, class: "btn-primary text-xs" if policy(Price).create? %>
           </header>
           
           <div class="space-y-4">
@@ -87,7 +86,7 @@
                     GHS <%= price.price %> at <%= link_to price.market.name, market_path(price.market) %>
                   </p>
                 </div>
-                <%= link_to "View", price_path(price), 
+                <%= link_to "View", store_owner_price_path(price), 
                     class: "btn-secondary text-xs" %>
               </div>
             <% end %>

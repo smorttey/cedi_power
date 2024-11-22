@@ -3,10 +3,10 @@ class Admin::DashboardController < ApplicationController
   before_action :authorize_admin
 
   def index
-    @users = User.all
-    @categories = Category.all
-    @items = Item.all
-    @markets = Market.all
+    @users = policy_scope(User)
+    @categories = policy_scope(Category)
+    @items = policy_scope(Item)
+    @markets = policy_scope(Market)
   end
 
   private

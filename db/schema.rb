@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_22_012841) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_22_110141) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -53,6 +53,8 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_22_012841) do
     t.string "market_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "owner_id"
+    t.index ["owner_id"], name: "index_markets_on_owner_id"
     t.index ["slug"], name: "index_markets_on_slug"
   end
 
@@ -100,6 +102,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_22_012841) do
   end
 
   add_foreign_key "items", "categories"
+  add_foreign_key "markets", "users", column: "owner_id"
   add_foreign_key "prices", "items"
   add_foreign_key "prices", "markets"
   add_foreign_key "saved_items", "items"

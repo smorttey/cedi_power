@@ -19,14 +19,17 @@ Rails.application.routes.draw do
   # Admin-specific routes
   namespace :admin do
     get "dashboard", to: "dashboard#index", as: :dashboard
-    resources :users, only: %i[index show destroy]
+    resources :users
+    resources :categories
+    resources :items
+    resources :markets
   end
 
   # Store owner-specific routes
   namespace :store_owner do
     get "dashboard", to: "dashboard#index", as: :dashboard
-    resources :prices, only: %i[index edit update]
-    resources :markets, only: %i[new create edit update]
+    resources :prices
+    resources :markets
   end
 
   # Saved Items for general users

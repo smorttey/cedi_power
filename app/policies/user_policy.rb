@@ -6,7 +6,7 @@ class UserPolicy < ApplicationPolicy
   
     # Users can view their own profile; admins can view any profile
     def show?
-      admin? || user == record
+      admin?
     end
   
     # Only admins can create or delete users
@@ -20,16 +20,16 @@ class UserPolicy < ApplicationPolicy
   
     # Users can update their own profile; admins can update any profile
     def update?
-      admin? || user == record
+      admin?
     end
   
     class Scope < Scope
       # Admins can view all users; general users see only themselves
       def resolve
-        if admin?
+        if user&.admin?
           scope.all
         else
-          scope.where(id: user.id)
+          scope.none
         end
       end
     end

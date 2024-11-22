@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  include Pundit
+  include Pundit::Authorization
   include ActionView::Helpers::AssetUrlHelper
   include MetaTags::ViewHelper
 
