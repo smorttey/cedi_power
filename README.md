@@ -40,7 +40,7 @@ Before you begin, ensure you have installed:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/cedi_power.git
+git clone https://github.com/smorttey/cedi_power.git
 cd cedi_power
 ```
 
